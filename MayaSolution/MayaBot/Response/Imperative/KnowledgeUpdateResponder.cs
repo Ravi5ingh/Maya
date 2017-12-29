@@ -19,7 +19,7 @@ namespace MayaBot.Response.Imperative
 
         public override string RespondTo(string message)
         {
-            message = message.Replace("remember that", "", StringComparison.OrdinalIgnoreCase);
+            message = message.Replace("remember that ", "", StringComparison.OrdinalIgnoreCase);
 
             var deps = Parser.GetDependencyArrayFromSentence(message);
 

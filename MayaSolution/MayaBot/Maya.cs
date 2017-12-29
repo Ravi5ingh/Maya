@@ -19,7 +19,8 @@ namespace MayaBot
             {
                 new GreetingResponder(brain),
                 new WhatResponder(brain),
-                new KnowledgeUpdateResponder(brain)
+                new KnowledgeUpdateResponder(brain),
+                new FarewellResponder(brain)
             };
         }
 

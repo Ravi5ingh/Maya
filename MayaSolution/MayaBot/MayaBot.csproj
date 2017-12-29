@@ -138,6 +138,7 @@
     <Compile Include="IMaya.cs" />
     <Compile Include="Response\BaseResponder.cs" />
     <Compile Include="Response\GreetingResponder.cs" />
+    <Compile Include="Response\Imperative\FarewellResponder.cs" />
     <Compile Include="Response\Imperative\KnowledgeUpdateResponder.cs" />
     <Compile Include="Response\IResponder.cs" />
     <Compile Include="Response\Interogative\WhatResponder.cs" />
