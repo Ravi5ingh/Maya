@@ -7,7 +7,7 @@ using MayaBot.Knowledge;
 using MayaBot.Language;
 using MayaBot.Utility;
 
-namespace MayaBot.Interogative
+namespace MayaBot.Response
 {
     public class GreetingResponder : BaseResponder
     {

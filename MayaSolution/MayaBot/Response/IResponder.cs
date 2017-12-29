@@ -1,5 +1,5 @@
 ﻿
-namespace MayaBot.Interogative
+namespace MayaBot.Response
 {
     public interface IResponder
     {

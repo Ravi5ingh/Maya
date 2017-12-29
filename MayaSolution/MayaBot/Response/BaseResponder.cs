@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MayaBot.Knowledge;
 
-namespace MayaBot.Interogative
+namespace MayaBot.Response
 {
     public abstract class BaseResponder : IResponder
     {

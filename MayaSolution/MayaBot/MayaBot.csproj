@@ -136,10 +136,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMaya.cs" />
-    <Compile Include="Interogative\BaseResponder.cs" />
-    <Compile Include="Interogative\GreetingResponder.cs" />
-    <Compile Include="Interogative\IResponder.cs" />
-    <Compile Include="Interogative\WhatResponder.cs" />
+    <Compile Include="Response\BaseResponder.cs" />
+    <Compile Include="Response\GreetingResponder.cs" />
+    <Compile Include="Response\IResponder.cs" />
+    <Compile Include="Response\Interogative\WhatResponder.cs" />
     <Compile Include="Knowledge\Brain.cs" />
     <Compile Include="Knowledge\IBrain.cs" />
     <Compile Include="Knowledge\Subject.cs" />
@@ -155,7 +155,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Imperative\" />
+    <Folder Include="Response\Imperative\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
