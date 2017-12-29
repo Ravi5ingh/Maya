@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace MayaBot.Interogative
 {
     public interface IResponder
     {
+        bool CanRespondTo(string message);
 
+        string RespondTo(string message);
     }
 }
