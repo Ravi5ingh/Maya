@@ -15,6 +15,7 @@ namespace MayaBot.Knowledge
     {
         public Brain(FileInfo knowledgeBaseFile = null)
         {
+            this.knowledgeBaseFileInfo = knowledgeBaseFile;
             subjects = knowledgeBaseFile != null
                 ? Util.DeSerializeAs<List<Subject>>(knowledgeBaseFile)
                 : new List<Subject>();
@@ -22,12 +23,19 @@ namespace MayaBot.Knowledge
 
         public bool KnowsAbout(string subjectName)
         {
-            return subjects.Any(subject => subjectName.IsIn(subject.SubjectNames));
+            return HasSubject(subjectName);
         }
 
         public void AddToSubject(string subjectName, string infoPoint)
         {
-            GetSubject(subjectName).InformationPoints.Add(infoPoint);
+            if (!HasSubject(subjectName))
+            {
+                subjects.Add(new Subject(subjectName, infoPoint));
+            }
+            else
+            {
+                GetSubject(subjectName).InformationPoints.Add(infoPoint);
+            }
         }
 
         public IList<string> GetInformation(string subjectName)
@@ -37,7 +45,7 @@ namespace MayaBot.Knowledge
 
         public void Save()
         {
-            var saveFileInfo = knowledgeBaseFileInfo ?? new FileInfo("");
+            var saveFileInfo = knowledgeBaseFileInfo ?? new FileInfo(".");
             Util.Serialize(subjects, saveFileInfo);
         }
 
@@ -45,9 +53,14 @@ namespace MayaBot.Knowledge
 
         #region Private
 
-        private IList<Subject> subjects;
+        private List<Subject> subjects;
 
         private FileInfo knowledgeBaseFileInfo;
+
+        private bool HasSubject(string subjectName)
+        {
+            return subjects.Any(subject => subjectName.IsIn(subject.SubjectNames));
+        }
 
         private Subject GetSubject(string subjectName)
         {

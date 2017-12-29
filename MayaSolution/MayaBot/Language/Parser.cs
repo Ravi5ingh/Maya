@@ -19,27 +19,29 @@ namespace MayaBot.Language
             tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
         }
 
-        public static string GetSubjectOfWhatQuestion(string question, bool includeSubjectModifiers = true)
+        public static TypedDependency[] GetDependencyArrayFromSentence(string sentence)
         {
-            var deps = GetDependencyArrayFromSentence(question);
+            var reader = new java.io.StringReader(sentence);
+            var words = tokenizerFactory.getTokenizer(reader).tokenize();
+            reader.close();
+            var tree = parser.apply(words);
+            return grammaticalStructureFactory.newGrammaticalStructure(tree).typedDependenciesCCprocessed().toArray()
+                .Select(dep => (TypedDependency)dep).ToArray();
+        }
 
-            var subjectDep = deps.Single(dep => GetTypeOfDependency(dep) == "nsubj");
-            var retVal = GetValueOfDependency(subjectDep);
+        public static string GetTypeOfDependency(TypedDependency dep)
+        {
+            return dep.reln().getShortName();
+        }
 
-            var subjectModifiers = string.Empty;
-            if (includeSubjectModifiers)
-            {
-                foreach (var dep in deps)
-                {
-                    var modifierType = GetTypeOfDependency(dep);
-                    if (modifierType == "amod" || modifierType == "compound")
-                    {
-                        subjectModifiers = subjectModifiers + GetValueOfDependency(dep) + " ";
-                    }
-                }
-            }
+        public static string GetValueOfDependency(TypedDependency dep)
+        {
+            return dep.dep().backingLabel().value();
+        }
 
-            return $"{subjectModifiers}{retVal}";
+        public static int GetWordNumberOfDependency(TypedDependency dep)
+        {
+            return dep.dep().hashCode();
         }
 
         #region Private
@@ -51,26 +53,6 @@ namespace MayaBot.Language
         private static LexicalizedParser parser;
 
         private static TokenizerFactory tokenizerFactory;
-
-        private static TypedDependency[] GetDependencyArrayFromSentence(string sentence)
-        {
-            var reader = new java.io.StringReader(sentence);
-            var words = tokenizerFactory.getTokenizer(reader).tokenize();
-            reader.close();
-            var tree = parser.apply(words);
-            return grammaticalStructureFactory.newGrammaticalStructure(tree).typedDependenciesCCprocessed().toArray()
-                .Select(dep => (TypedDependency)dep).ToArray();
-        }
-
-        private static string GetTypeOfDependency(TypedDependency dep)
-        {
-            return dep.reln().getShortName();
-        }
-
-        private static string GetValueOfDependency(TypedDependency dep)
-        {
-            return dep.dep().backingLabel().value();
-        }
 
         #endregion
     }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using MayaBot.Knowledge;
 using MayaBot.Language;
 using MayaBot.Utility;
@@ -18,7 +19,7 @@ namespace MayaBot.Response.Interogative
 
         public override string RespondTo(string message)
         {
-            var subject = Parser.GetSubjectOfWhatQuestion(message);
+            var subject = GetSubjectOfQuestion(message);
             string retVal;
             if (brain.KnowsAbout(subject))
             {
@@ -32,6 +33,29 @@ namespace MayaBot.Response.Interogative
             }
 
             return retVal;
+        }
+
+        private static string GetSubjectOfQuestion(string question, bool includeSubjectModifiers = true)
+        {
+            var deps = Parser.GetDependencyArrayFromSentence(question);
+
+            var subjectDep = deps.Single(dep => Parser.GetTypeOfDependency(dep) == "nsubj");
+            var retVal = Parser.GetValueOfDependency(subjectDep);
+
+            var subjectModifiers = string.Empty;
+            if (includeSubjectModifiers)
+            {
+                foreach (var dep in deps)
+                {
+                    var modifierType = Parser.GetTypeOfDependency(dep);
+                    if (modifierType == "amod" || modifierType == "compound")
+                    {
+                        subjectModifiers = subjectModifiers + Parser.GetValueOfDependency(dep) + " ";
+                    }
+                }
+            }
+
+            return $"{subjectModifiers}{retVal}";
         }
     }
 }

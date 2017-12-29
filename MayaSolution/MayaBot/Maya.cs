@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MayaBot.Interogative;
 using MayaBot.Knowledge;
+using MayaBot.Response;
+using MayaBot.Response.Imperative;
+using MayaBot.Response.Interogative;
 
 namespace MayaBot
 {
@@ -20,7 +18,8 @@ namespace MayaBot
             responders = new List<IResponder>()
             {
                 new GreetingResponder(brain),
-                new WhatResponder(brain)
+                new WhatResponder(brain),
+                new KnowledgeUpdateResponder(brain)
             };
         }
 
@@ -30,7 +29,9 @@ namespace MayaBot
             {
                 if (responder.CanRespondTo(message))
                 {
-                    return responder.RespondTo(message);
+                    var retVal = responder.RespondTo(message);
+                    brain.Save();
+                    return retVal;
                 }
             }
 

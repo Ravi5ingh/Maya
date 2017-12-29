@@ -138,6 +138,7 @@
     <Compile Include="IMaya.cs" />
     <Compile Include="Response\BaseResponder.cs" />
     <Compile Include="Response\GreetingResponder.cs" />
+    <Compile Include="Response\Imperative\KnowledgeUpdateResponder.cs" />
     <Compile Include="Response\IResponder.cs" />
     <Compile Include="Response\Interogative\WhatResponder.cs" />
     <Compile Include="Knowledge\Brain.cs" />
@@ -154,8 +155,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Response\Imperative\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

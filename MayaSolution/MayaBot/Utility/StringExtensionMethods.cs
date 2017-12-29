@@ -55,6 +55,26 @@ namespace MayaBot.Utility
 
         #region Text manipulation
 
+        public static string Replace(this string str, string oldValue, string newValue, StringComparison comparison)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            int previousIndex = 0;
+            int index = str.IndexOf(oldValue, comparison);
+            while (index != -1)
+            {
+                sb.Append(str.Substring(previousIndex, index - previousIndex));
+                sb.Append(newValue);
+                index += oldValue.Length;
+
+                previousIndex = index;
+                index = str.IndexOf(oldValue, index, comparison);
+            }
+            sb.Append(str.Substring(previousIndex));
+
+            return sb.ToString();
+        }
+
         public static string After(this string str, string fromString)
         {
             return str.Substring(str.IndexOf(fromString) + fromString.Length);

@@ -24,7 +24,9 @@ namespace MayaBot.Utility
         {
             var serializerObject = new XmlSerializer(typeof(T));
             var stream = new FileStream(fileInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.Read);
-            return (T)serializerObject.Deserialize(stream);
+            var retVal = (T)serializerObject.Deserialize(stream);
+            stream.Close();
+            return retVal;
         }
         
         /// <summary>
