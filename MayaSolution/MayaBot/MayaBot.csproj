@@ -135,7 +135,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="IMaya.cs" />
     <Compile Include="Interogative\BaseResponder.cs" />
     <Compile Include="Interogative\GreetingResponder.cs" />
