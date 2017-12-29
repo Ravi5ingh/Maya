@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace MayaBot.Knowledge
 {
+    [Serializable]
     public class Subject
     {
-        public IList<string> SubjectNames { get; set; }
+        public List<string> SubjectNames { get; set; }
 
-        public IList<string> InformationPoints { get; set; }
+        public List<string> InformationPoints { get; set; }
+
+        public override string ToString()
+        {
+            return $"{SubjectNames[0]}, {InformationPoints[0]}";
+        }
     }
 }

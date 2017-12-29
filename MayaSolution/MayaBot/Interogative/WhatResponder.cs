@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using MayaBot.Knowledge;
 using MayaBot.Language;
+using MayaBot.Utility;
 
 namespace MayaBot.Interogative
 {
@@ -22,7 +23,7 @@ namespace MayaBot.Interogative
             if (brain.KnowsAbout(subject))
             {
                 var info = brain.GetInformation(subject);
-                retVal = $"This is what I know about {subject}:\n{info}";
+                retVal = $"This is what I know about {subject}:\n{info.Aggregate("\n")}";
             }
             else
             {

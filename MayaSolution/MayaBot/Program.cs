@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MayaBot.Knowledge;
+using MayaBot.Utility;
 
 namespace MayaBot
 {
@@ -10,6 +13,17 @@ namespace MayaBot
     {
         public static void Main(string[] args)
         {
+            var knowledgeBaseFileInfo = new FileInfo(@"D:\Ravi\Lab\Maya_Stuff\KnowledgeBase.xml");
+
+            var maya = new Maya(knowledgeBaseFileInfo);
+
+            Console.WriteLine(maya.Greeting);
+            while (true)
+            {
+                var messageFromUser = Console.ReadLine();
+                Console.WriteLine(maya.RespondTo(messageFromUser));
+            }
+
             Console.WriteLine("Hello World :D");
             Console.ReadLine();
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MayaBot.Language
+namespace MayaBot.Utility
 {
     public static class StringExtensionMethods
     {
@@ -23,7 +23,7 @@ namespace MayaBot.Language
 
         public static double GetSimilarityTo(this string str, string otherString)
         {
-            return (double)Parser.LevenshteinDistance(str, otherString) / Math.Max(str.Length, otherString.Length);
+            return (double)Util.LevenshteinDistance(str, otherString) / Math.Max(str.Length, otherString.Length);
         }
 
         public static bool IsNot(this string str, string compareTo)
@@ -108,6 +108,21 @@ namespace MayaBot.Language
         public static int WordCount(this string str)
         {
             return str.Split(' ').Length;
+        }
+
+        /// <summary>
+        /// Aggregate the contents into a human readable string
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static string Aggregate(this IEnumerable<string> arr, string delimiter = ", ")
+        {
+            var retVal = string.Empty;
+            foreach (var element in arr)
+            {
+                retVal = retVal + delimiter + element;
+            }
+            return retVal.Length > 2 ? retVal.Substring(delimiter.Length) : retVal;
         }
 
         #endregion

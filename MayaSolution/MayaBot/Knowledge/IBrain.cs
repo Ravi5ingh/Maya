@@ -14,5 +14,7 @@ namespace MayaBot.Knowledge
         void AddToSubject(string subjectName, string infoPoint);
 
         IList<string> GetInformation(string subjectName);
+
+        void Save();
     }
 }

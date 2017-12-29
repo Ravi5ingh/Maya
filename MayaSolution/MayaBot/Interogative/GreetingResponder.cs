@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MayaBot.Knowledge;
 using MayaBot.Language;
+using MayaBot.Utility;
 
 namespace MayaBot.Interogative
 {

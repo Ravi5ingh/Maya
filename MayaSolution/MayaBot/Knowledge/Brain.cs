@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MayaBot.Utility;
 
 namespace MayaBot.Knowledge
 {
@@ -12,21 +13,16 @@ namespace MayaBot.Knowledge
 
     public class Brain : IBrain
     {
-        public Brain(FileInfo knowledgeBase = null)
+        public Brain(FileInfo knowledgeBaseFile = null)
         {
-            if (knowledgeBase != null)
-            {
-                //upload during runtime
-            }
-            else
-            {
-                subjects = new List<Subject>();
-            }
+            subjects = knowledgeBaseFile != null
+                ? Util.DeSerializeAs<List<Subject>>(knowledgeBaseFile)
+                : new List<Subject>();
         }
 
         public bool KnowsAbout(string subjectName)
         {
-            return subjects.Any(subject => subject.SubjectNames.Contains(subjectName));
+            return subjects.Any(subject => subjectName.IsIn(subject.SubjectNames));
         }
 
         public void AddToSubject(string subjectName, string infoPoint)
@@ -39,15 +35,23 @@ namespace MayaBot.Knowledge
             return GetSubject(subjectName).InformationPoints;
         }
 
+        public void Save()
+        {
+            var saveFileInfo = knowledgeBaseFileInfo ?? new FileInfo("");
+            Util.Serialize(subjects, saveFileInfo);
+        }
+
         #endregion
 
         #region Private
 
         private IList<Subject> subjects;
 
+        private FileInfo knowledgeBaseFileInfo;
+
         private Subject GetSubject(string subjectName)
         {
-            return subjects.Single(subject => subject.SubjectNames.Contains(subjectName));
+            return subjects.Single(subject => subjectName.IsIn(subject.SubjectNames));
         }
 
         #endregion
