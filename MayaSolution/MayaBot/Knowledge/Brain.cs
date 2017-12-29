@@ -38,9 +38,9 @@ namespace MayaBot.Knowledge
             }
         }
 
-        public IList<string> GetInformation(string subjectName)
+        public Subject GetSubject(string subjectName)
         {
-            return GetSubject(subjectName).InformationPoints;
+            return subjects.Single(subject => subjectName.IsIn(subject.SubjectNames));
         }
 
         public void Save()
@@ -60,11 +60,6 @@ namespace MayaBot.Knowledge
         private bool HasSubject(string subjectName)
         {
             return subjects.Any(subject => subjectName.IsIn(subject.SubjectNames));
-        }
-
-        private Subject GetSubject(string subjectName)
-        {
-            return subjects.Single(subject => subjectName.IsIn(subject.SubjectNames));
         }
 
         #endregion

@@ -25,11 +25,14 @@ namespace MayaBot.Response
             var retVal = string.Empty;
             if (message.WordCount() == 2 && message.SecondWord().IsNot("maya"))
             {
-                retVal = $"Hi. Who is {message.SecondWord()}?";
+                var wrongName = message.SecondWord();
+                retVal = $"Hi. Who is {wrongName}?";
+                Context.CurrentSubject = new Subject(wrongName);
             }
             else
             {
                 retVal = "Hello to you too :)";
+                Context.CurrentSubject = null;
             }
 
             return retVal;

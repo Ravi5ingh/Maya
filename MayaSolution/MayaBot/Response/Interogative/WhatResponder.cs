@@ -23,7 +23,7 @@ namespace MayaBot.Response.Interogative
             string retVal;
             if (brain.KnowsAbout(subject))
             {
-                var info = brain.GetInformation(subject);
+                var info = brain.GetSubject(subject).InformationPoints;
                 retVal = $"This is what I know about {subject}:\n{info.Aggregate("\n")}";
             }
             else

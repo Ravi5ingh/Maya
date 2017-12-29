@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using edu.stanford.nlp.parser.lexparser;
 using edu.stanford.nlp.process;
 using edu.stanford.nlp.trees;
+using MayaBot.Utility;
 
 namespace MayaBot.Language
 {
@@ -19,14 +20,19 @@ namespace MayaBot.Language
             tokenizerFactory = PTBTokenizer.factory(new CoreLabelTokenFactory(), "");
         }
 
-        public static TypedDependency[] GetDependencyArrayFromSentence(string sentence)
+        public static IEnumerable<TypedDependency> GetDependencyArrayFromSentence(string sentence)
         {
             var reader = new java.io.StringReader(sentence);
             var words = tokenizerFactory.getTokenizer(reader).tokenize();
             reader.close();
             var tree = parser.apply(words);
             return grammaticalStructureFactory.newGrammaticalStructure(tree).typedDependenciesCCprocessed().toArray()
-                .Select(dep => (TypedDependency)dep).ToArray();
+                .Select(dep => (TypedDependency)dep);
+        }
+
+        public static IEnumerable<TypedDependency> GetAllSubjectsFromSentence(string sentence)
+        {
+            return GetDependencyArrayFromSentence(sentence).Where(dep => Parser.GetTypeOfDependency(dep).Is("nsubj"));
         }
 
         public static string GetTypeOfDependency(TypedDependency dep)

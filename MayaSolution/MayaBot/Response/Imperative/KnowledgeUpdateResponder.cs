@@ -14,12 +14,12 @@ namespace MayaBot.Response.Imperative
 
         public override bool CanRespondTo(string message)
         {
-            return message.StartsWith("remember that", StringComparison.OrdinalIgnoreCase);
+            return message.StartsWith("update", StringComparison.OrdinalIgnoreCase);
         }
 
         public override string RespondTo(string message)
         {
-            message = message.Replace("remember that ", "", StringComparison.OrdinalIgnoreCase);
+            message = message.Replace("update ", "", StringComparison.OrdinalIgnoreCase);
 
             var deps = Parser.GetDependencyArrayFromSentence(message);
 
@@ -28,8 +28,9 @@ namespace MayaBot.Response.Imperative
                 .OrderBy(Parser.GetWordNumberOfDependency).First());
 
             brain.AddToSubject(subject, message);
+            Context.CurrentSubject = brain.GetSubject(subject);
 
-            return $"Ok, this is what I've understood about the {subject}\n{message}.\n\n I've updated the knowledge base";
+            return $"Update to knowledge base about ({subject}):\n{message}";
         }
     }
 }

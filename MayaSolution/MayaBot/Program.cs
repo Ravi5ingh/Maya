@@ -8,7 +8,10 @@ namespace MayaBot
     public class Program
     {
         public static void Main(string[] args)
-        {   
+        {
+            Language.Parser.Initialize();
+            var deps = Language.Parser.GetDependencyArrayFromSentence("Task scheduler is ts");
+
             var knowledgeBaseFileInfo = new FileInfo(@"D:\Ravi\Lab\Maya_Stuff\KnowledgeBase.xml");
 
             var maya = new Maya(knowledgeBaseFileInfo);
