@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using MayaBot.Knowledge;
+using MayaBot.Language;
 
 namespace MayaBot.Interogative
 {
@@ -15,12 +12,25 @@ namespace MayaBot.Interogative
 
         public override bool CanRespondTo(string message)
         {
-            throw new NotImplementedException();
+            return message.FirstWord().Is("What");
         }
 
         public override string RespondTo(string message)
         {
-            throw new NotImplementedException();
+            var subject = Parser.GetSubjectOfWhatQuestion(message);
+            string retVal;
+            if (brain.KnowsAbout(subject))
+            {
+                var info = brain.GetInformation(subject);
+                retVal = $"This is what I know about {subject}:\n{info}";
+            }
+            else
+            {
+                Process.Start("chrome", @"https://www.google.com/search?q=" + subject.Replace(" ", "%20"));
+                retVal = $"I don't know anything about {subject}. I've searched it in the browser for you";
+            }
+
+            return retVal;
         }
     }
 }
